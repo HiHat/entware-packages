@@ -1,24 +1,24 @@
 --- a/setup.py
 +++ b/setup.py
-@@ -185,7 +185,7 @@ if os.path.exists('/var/run'):
- 	# if we are on the system with /var/run -- we are to use it for having fail2ban/
- 	# directory there for socket file etc.
- 	# realpath is used to possibly resolve /var/run -> /run symlink
--	data_files_extra += [(realpath('/var/run/fail2ban'), '')]
-+	data_files_extra += [(realpath('/opt/var/run/fail2ban'), '')]
+@@ -169,7 +169,7 @@ if os.path.exists('/var/run'):
+        # if we are on the system with /var/run -- we are to use it for having fail2ban/
+        # directory there for socket file etc.
+        # realpath is used to possibly resolve /var/run -> /run symlink
+-       data_files_extra += [(realpath('/var/run/fail2ban'), '')]
++       data_files_extra += [(realpath('/opt/var/run/fail2ban'), '')]
  
  # Installing documentation files only under Linux or other GNU/ systems
  # (e.g. GNU/kFreeBSD), since others might have protective mechanisms forbidding
-@@ -196,7 +196,7 @@ if platform_system in ('solaris', 'sunos
- 	doc_files.append('README.Solaris')
+@@ -180,7 +180,7 @@ if platform_system in ('solaris', 'sunos'):
+        doc_files.append('README.Solaris')
  if platform_system in ('linux', 'solaris', 'sunos') or platform_system.startswith('gnu'):
- 	data_files_extra.append(
--		('/usr/share/doc/fail2ban', doc_files)
-+		('/opt/share/doc/fail2ban', doc_files)
- 	)
+        data_files_extra.append(
+-               ('/usr/share/doc/fail2ban', doc_files)
++               ('/opt/share/doc/fail2ban', doc_files)
+        )
  
  
-@@ -243,26 +243,26 @@ setup(
+@@ -227,26 +227,26 @@ setup(
  				for f in w[2]]
  	} if with_tests else {},
  	data_files = [
@@ -52,7 +52,7 @@
  			''
  		),
  	] + data_files_extra,
-@@ -273,15 +273,15 @@ setup(
+@@ -257,15 +257,15 @@ setup(
  # Search for obsolete files.
  obsoleteFiles = []
  elements = {
@@ -71,12 +71,26 @@
  		[
  			"version.py",
  			"protocol.py"
-@@ -304,7 +304,7 @@ if obsoleteFiles:
- 		print("\t" + f)
+@@ -288,18 +288,18 @@ if obsoleteFiles:
+ 		print(("\t" + f))
  	print("")
  
 -if isdir("/usr/lib/fail2ban"):
 +if isdir("/opt/lib/fail2ban"):
  	print("")
- 	print("Fail2ban is not installed under /usr/lib anymore. The new "
+-	print("Fail2ban is not installed under /usr/lib anymore. The new "
++	print("Fail2ban is not installed under /opt/lib anymore. The new "
  		  "location is under /usr/share. Please remove the directory "
+-		  "/usr/lib/fail2ban and everything under this directory.")
++		  "/opt/lib/fail2ban and everything under this directory.")
+ 	print("")
+ 
+ # Update config file
+ if sys.argv[1] == "install":
+ 	print("")
+ 	print("Please do not forget to update your configuration files.")
+-	print("They are in \"/etc/fail2ban/\".")
++	print("They are in \"/opt/etc/fail2ban/\".")
+ 	print("")
+ 	print("You can also install systemd service-unit file from \"build/fail2ban.service\"")
+ 	print("resp. corresponding init script from \"files/*-initd\".")
